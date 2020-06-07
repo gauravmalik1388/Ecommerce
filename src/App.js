@@ -4,24 +4,64 @@ import Homepage from './pages/homepage/homepage.componenet';
 import './App.css';
 import Header from './components/header/header.component.jsx';
 import Signinandsignup from './pages/Sign-in-and-sign-up/Sign-in-and-sign-up.component';
-
-
-
+import {auth} from './firebase/firebase.utlis';
 import Shop from './pages/shop/shop.component.jsx';
 import {
   Switch,
   Route
-  
-} from "react-router-dom";
+  }
+  from "react-router-dom";
 
 
 
-function App() {
-  return (
+class App extends React.Component {
+constructor(){
+
+super();
+
+
+this.state={
+
+currentUser :null
+
+
+
+
+}
+
+}
+
+unsubscribedFromAuth=null
+
+
+
+componentDidMount(){
+
+this.unsubscribedFromAuth=auth.onAuthStateChanged(user=>{
+
+this.setState({currentUser:user});
+
+console.log(user);
+
+
+
+});
+
+
+}
+
+componentWillUnmount()
+{
+
+this.unsubscribedFromAuth();
+}
+
+
+  render() { return (
    
 
 <div>
-<Header/>
+<Header  currentUser={this.state.currentUser}      />
 <Switch>
 <Route exact path='/' component={Homepage}  />
 <Route exact path='/Shop' component={Shop}  />
@@ -32,6 +72,9 @@ function App() {
 
 
   );
-}
+
+  }
+
+  }
 
 export default App;
