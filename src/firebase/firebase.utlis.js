@@ -14,6 +14,47 @@ const  firebaseConfig = {
     measurementId: "G-C0X05MQ5BL"
   };
   // Initialize Firebase
+
+
+export const createuserprofiledocument= async (userAuth,additionalData)=>{
+
+if(!userAuth)return ;
+
+const useref=firestore.doc(`users/${userAuth.uid}`);
+
+const snapshot =await useref.get();
+
+if(!snapshot.exists){
+
+  const{displayName,email}=userAuth;
+  const createdAt=new Date();
+
+  try{
+
+await useref.set({
+
+displayName,email,createdAt,...additionalData
+
+
+
+}); 
+
+}
+catch(error){
+
+console.log('error creatring error',error.message);
+
+}
+
+}
+
+
+return useref;
+
+ }
+
+
+
   firebase.initializeApp(firebaseConfig);
   
   

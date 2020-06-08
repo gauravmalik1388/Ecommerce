@@ -4,7 +4,7 @@ import Homepage from './pages/homepage/homepage.componenet';
 import './App.css';
 import Header from './components/header/header.component.jsx';
 import Signinandsignup from './pages/Sign-in-and-sign-up/Sign-in-and-sign-up.component';
-import {auth} from './firebase/firebase.utlis';
+import {auth,createuserprofiledocument} from './firebase/firebase.utlis';
 import Shop from './pages/shop/shop.component.jsx';
 import {
   Switch,
@@ -37,13 +37,13 @@ unsubscribedFromAuth=null
 
 componentDidMount(){
 
-this.unsubscribedFromAuth=auth.onAuthStateChanged(user=>{
+this.unsubscribedFromAuth=auth.onAuthStateChanged(async user=>{
 
-this.setState({currentUser:user});
+// this.setState({currentUser:user});
 
-console.log(user);
+// console.log(user);
 
-
+createuserprofiledocument(user);
 
 });
 
