@@ -12,24 +12,36 @@ import {
   }
   from "react-router-dom";
 
+import {connect} from 'react-redux';
+
+import {setcurrentuser} from './redux/user/user.action';
+
+
+
+
+
+
 
 
 class App extends React.Component {
-constructor(){
+// constructor(){
 
-super();
-
-
-this.state={
-
-currentUser :null
+// super();
 
 
+// this.state={
+
+// currentUser :null
 
 
-}
 
-}
+
+// }
+
+// }
+
+
+
 
 unsubscribedFromAuth=null
 
@@ -37,23 +49,30 @@ unsubscribedFromAuth=null
 
 
 componentDidMount() {
+  const {setcurrentuser}=this.props;
+
+  console.log(setcurrentuser);
   this.unsubscribeFromAuth = auth.onAuthStateChanged(async userAuth => {
     if (userAuth) {
       const userRef = await createuserprofiledocument(userAuth);
 
       userRef.onSnapshot(snapShot => {
-        this.setState({
-          currentUser: {
-            id: snapShot.id,
-            ...snapShot.data()
-          }
-        });
+        setcurrentuser({
 
-        console.log(this.state);
+          id: snapShot.id,
+          ...snapShot.data()
+
+
+
+        });
+        
+  
+
+    
       });
     }
 
-    this.setState({ currentUser: userAuth });
+    setcurrentuser(userAuth);
   });
 }
 
@@ -66,9 +85,9 @@ this.unsubscribedFromAuth();
 
   render() { return (
    
-
+//<Header  currentUser={this.state.currentUser}   
 <div>
-<Header  currentUser={this.state.currentUser}      />
+<Header />
 <Switch>
 <Route exact path='/' component={Homepage}  />
 <Route exact path='/Shop' component={Shop}  />
@@ -84,4 +103,17 @@ this.unsubscribedFromAuth();
 
   }
 
-export default App;
+
+
+const mapDispatchToProps=dispatch=>({
+
+
+setcurrentuser:user=>dispatch(setcurrentuser(user))
+
+
+
+});
+
+
+
+export default connect(null,mapDispatchToProps)(App);

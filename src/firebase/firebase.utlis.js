@@ -15,7 +15,7 @@ const  firebaseConfig = {
   };
   // Initialize Firebase
 
-
+//for app.js
 export const createuserprofiledocument= async (userAuth,additionalData)=>{
 
 if(!userAuth)return ;

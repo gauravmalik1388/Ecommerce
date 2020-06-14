@@ -4,17 +4,17 @@ import './index.css';
 import App from './App';
 import {Provider} from 'react-redux';
 import {BrowserRouter } from 'react-router-dom';
-import Store from  './redux/store';
+import store from  './redux/store';
 
 
 
 ReactDOM.render(
   
- // <Provider Store={Store}>
+ <Provider store={store}>
   <BrowserRouter>    
   <App />
   </BrowserRouter>
- // </Provider>
+  </Provider>
   ,
   document.getElementById('root')
 );
