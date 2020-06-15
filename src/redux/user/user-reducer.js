@@ -1,11 +1,16 @@
-//a state receives a state and action
+import {userActionType} from './users.type';
+
+
+
+
+
 console.log('bc');
 const INITIAL_STATE={
     currentUser:null
 }
 const userReducer=(state=INITIAL_STATE,action)=>{
 switch(action.type){
-case'SET_CURRENT_USER':
+case userActionType.SET_CURRENT_USER:
 return {
    ...state,
 currentUser:action.payload

@@ -8,7 +8,8 @@ import {auth,createuserprofiledocument} from './firebase/firebase.utlis';
 import Shop from './pages/shop/shop.component.jsx';
 import {
   Switch,
-  Route
+  Route,
+  Redirect
   }
   from "react-router-dom";
 
@@ -91,7 +92,15 @@ this.unsubscribedFromAuth();
 <Switch>
 <Route exact path='/' component={Homepage}  />
 <Route exact path='/Shop' component={Shop}  />
-<Route exact path='/Signin' component={Signinandsignup}/>
+<Route exact path='/Signin' 
+     render={() =>
+      this.props.currentUser ? (
+        <Redirect to='/' />
+      ) : (
+        <Signinandsignup />
+      )
+    }
+  />
 </Switch>
 </div>
 
@@ -115,5 +124,12 @@ setcurrentuser:user=>dispatch(setcurrentuser(user))
 });
 
 
+const mapsStatetoProps=({user})=>({
 
-export default connect(null,mapDispatchToProps)(App);
+currentUser:user.currentUser
+
+
+});
+
+
+export default connect(mapsStatetoProps,mapDispatchToProps)(App);
